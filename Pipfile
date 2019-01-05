@@ -1,0 +1,19 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+black = "*"
+boto3 = "*"
+cfnresponse = "*"
+moto = "*"
+pylint = "*"
+pytest = "==4.0.1"
+pytest-mock = "*"
+
+[packages]
+aws-sam-cli = "*"
+
+[requires]
+python_version = "3.6"

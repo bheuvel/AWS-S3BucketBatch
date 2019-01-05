@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  S3BucketBatch Lambda Function
+
+Globals:
+  Function:
+    Timeout: 30
+
+Resources:
+  S3BucketBatchFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3bucketbatch/
+      Handler: app.lambda_handler
+      Runtime: python3.6
+      Policies:
+        - Statement:
+            - Sid: S3BucketBatchFunctionPolicy
+              Effect: Allow
+              Action:
+                - s3:CreateBucket
+                - s3:DeleteBucket
+              Resource: "*"
+
+Outputs:
+  S3BucketBatchFunction:
+    Description: "S3BucketBatch Lambda Function ARN"
+    Value: !GetAtt S3BucketBatchFunction.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-S3BucketBatchFunction"

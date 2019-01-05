@@ -1,0 +1,27 @@
+# Example CloudFormation template
+# Using the Custom::S3BucketBatch resource
+#
+# (After deployment of S3BucketBatch) Deploy using:
+# aws cloudformation create-stack \
+#   --template-body "file://`pwd`/ten_s3_buckets.yaml" \
+#   --stack-name S3BucketBatch-Test
+
+AWSTemplateFormatVersion: "2010-09-09"
+Parameters:
+  NumberOfBuckets:
+    Description: "Number of S3 buckets to create"
+    Type: Number
+    Default: 10
+
+Resources:
+  S3BucketBatchResource:
+    Type: Custom::S3BucketBatch
+    Properties:
+      ServiceToken: !ImportValue "s3bucketbatch-S3BucketBatchFunction"
+      Count: !Ref NumberOfBuckets
+      BucketName: "many-buckets-project"
+
+Outputs:
+  S3BucketBatchResource:
+    Description: Number of buckets created
+    Value: !GetAtt S3BucketBatchResource.NumberOfBucketsCreated
